@@ -35,9 +35,9 @@ require_once 'config/connect.php';
       <th>Price</th>
     </tr>
     <?php
-    $products = mysqli_query($connect, "SELECT * FROM products");
-    $products = mysqli_fetch_all($products);
-    foreach($products as $product):
+    $sql = "SELECT * FROM products";
+    $result = $connect -> query($sql);
+    foreach($result as $product):
       ?>
       <tr>
         <td><?=$product[0]?></td>

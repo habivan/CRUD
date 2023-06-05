@@ -2,8 +2,9 @@
 require_once 'config/connect.php';
 
 $product_id = $_GET['id'];
-$product = mysqli_query($connect, "SELECT * FROM products WHERE id = '$product_id'");
-$product = mysqli_fetch_assoc($product);
+$product = "SELECT * FROM products WHERE id = '$product_id'";
+$result = $connect ->query($product);
+
 
 ?>
 
@@ -18,6 +19,7 @@ $product = mysqli_fetch_assoc($product);
 <body>
 <h3>Изменение товара</h3>
   <form action="vendor/update.php" method="POST">
+    <?php foreach($result as $product):?>
     <input type="hidden" name="id" value="<?=$product['id']?>">
     <p>Заголовок</p>
     <input type="text" name="title" value="<?=$product['title']?>">
@@ -26,6 +28,7 @@ $product = mysqli_fetch_assoc($product);
     <p>Цена</p>
     <input type="number" name="price" value="<?=$product['price']?>"><br><br>
     <input type="submit">
+    <?php endforeach ?>
   </form>
 </body>
 </html>

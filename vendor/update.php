@@ -2,11 +2,16 @@
 require_once '../config/connect.php';
 
 $id = $_POST['id'];
-$title = $_POST['title'];
-$description = $_POST['description'];
-$price = $_POST['price'];
+$title = htmlspecialchars( $_POST['title']);
+$description = htmlspecialchars( $_POST['description']);
+$price = htmlspecialchars( $_POST['price']);
 
-mysqli_query($connect, "UPDATE `products` SET `title` = '$title', `price` = '$price', `description` = '$description' 
-WHERE `products`.`id` = '$id'");
+
+
+$sql = "UPDATE `products` SET `title` = :title, `price` = :price, `description` = :description
+WHERE `products`.`id` = '$id'";
+$chec = $connect->prepare($sql);
+
+$chec -> execute(['title'=>$title, 'price'=>$price, 'description'=>$description]);
 
 header('Location: ../index.php');
